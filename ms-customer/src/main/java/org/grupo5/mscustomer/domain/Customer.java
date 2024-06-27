@@ -27,7 +27,7 @@ public class Customer {
     @Column(length = 10, nullable = false)
     private String gender;
     @Column(length = 10, nullable = false)
-    @JsonFormat(pattern = "dd-MM-yyyy") //formatando a data
+    @JsonFormat(pattern = "dd/MM/yyyy") //formatando a data
     private LocalDate birthday; //maior de 18
 
     @Column(length = 50, nullable = false, unique = true)
