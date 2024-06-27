@@ -28,7 +28,7 @@ public class CustomerResponseDto {
     private LocalDate birthday;
 
     private String email;
-    private Long points;
+    private Integer points;
 
     private  String url_photo;
 }

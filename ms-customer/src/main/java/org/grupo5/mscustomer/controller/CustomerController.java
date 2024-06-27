@@ -1,5 +1,6 @@
 package org.grupo5.mscustomer.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.grupo5.mscustomer.domain.dtos.CustomerCreateDto;
 import org.grupo5.mscustomer.domain.dtos.CustomerResponseDto;
@@ -20,7 +21,7 @@ private final CustomerService customerService;
 
 
 @PostMapping("/customers")
-    public ResponseEntity<CustomerResponseDto> createCustomer(@RequestBody CustomerCreateDto customerDto){
+    public ResponseEntity<CustomerResponseDto> createCustomer(@Valid @RequestBody CustomerCreateDto customerDto){
             var customer = customerService.createCustomer(customerDto);
             CustomerResponseDto customerResponseDto = new CustomerResponseDto();
             BeanUtils.copyProperties(customer, customerResponseDto);

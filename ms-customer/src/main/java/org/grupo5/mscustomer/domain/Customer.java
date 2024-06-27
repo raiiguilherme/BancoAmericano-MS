@@ -34,7 +34,7 @@ public class Customer {
     private String email;
 
     @Column(nullable = false)
-    private Long points;
+    private Integer points;
     @Column(nullable = false)
     private  String url_photo;
 

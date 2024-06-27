@@ -21,6 +21,14 @@ public class CustomerService {
 
 
 
+
+
+
+
+
+
+
+
     private Customer costumerDtoForCostumer(CustomerCreateDto dto){
         Customer customer = new Customer();
         customer.setCpf(dto.getCpf());
@@ -28,7 +36,7 @@ public class CustomerService {
         customer.setBirthday(dto.getBirthday());
         customer.setGender(dto.getGender());
         customer.setUrl_photo(dto.getUrl_photo());
-        customer.setPoints(0L);
+        customer.setPoints(0);
         customer.setEmail(dto.getEmail());
         return customer;
     }
