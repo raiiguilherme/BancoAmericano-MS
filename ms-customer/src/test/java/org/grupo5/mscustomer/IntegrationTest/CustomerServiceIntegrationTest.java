@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import lombok.RequiredArgsConstructor;
 import org.grupo5.mscustomer.mocks.CustomerFakeMock;
+import org.grupo5.mscustomer.repository.CustomerRepository;
 import org.grupo5.mscustomer.service.CustomerService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,11 +29,20 @@ public class CustomerServiceIntegrationTest {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @BeforeEach
+    public void SetUp(){
+
+        customerRepository.deleteAll();
+    }
+
 
     @Test
     public void SaveCustormerWhenDataIsValidAndRetorn200OK(){
 
-    var cotumerDto = customerFakeMock.CustomerDataValid();
+    var cotumerDto = customerFakeMock.CustomerDtoDataValid();
    var customer = customerService.createCustomer(cotumerDto);
 
    assertThat(customer).isNotNull();

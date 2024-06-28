@@ -9,21 +9,19 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.format.annotation.DateTimeFormat;
-
 
 import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerCreateDto {
-
-    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "The CPF must follow this pattern xxx.xxx.xxx-xx")
-    private String cpf;
+public class CustomerUpdateDto {
     @NotBlank
-    @Size(min = 3, max = 20, message = "the size must be between 3 and 20")
+    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "the CPF must follow this pattern xxx.xxx.xxx-xx")
+    private String cpf;
+
+    @NotBlank
+    @Size(min = 3, max = 20)
     private String name;
     @NotBlank
     @Pattern(regexp = "Masculino|Feminino", message = "The gender must be 'Masculino' or 'Feminino'")
@@ -34,7 +32,6 @@ public class CustomerCreateDto {
     @NotBlank
     @Email(message = "Email in invalid format", regexp = "^[a-z0-9.+-]+@[a-z0-9.-]+\\.[a-z]{2,}$")
     private String email;
-    @NotBlank(message = "Must not be null or blank")
+    @NotBlank
     private  String url_photo;
-
 }

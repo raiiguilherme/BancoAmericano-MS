@@ -14,15 +14,28 @@ import java.time.LocalDate;
 public class CustomerFakeMock {
 
 
-    public CustomerCreateDto CustomerDataValid(){
+    public CustomerCreateDto CustomerDtoDataValid(){
       CustomerCreateDto customer = new CustomerCreateDto();
       customer.setEmail("rai@gmail.com");
       customer.setName("rai");
-      customer.setGender("Male");
+      customer.setGender("Masculino");
       customer.setCpf("165.880.554-20");
       customer.setBirthday(LocalDate.of(2000,12,10));
       customer.setUrl_photo("urldafoto");
       return customer;
+    }
+
+    public Customer CustomerDataValid(){
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setEmail("rai@gmail.com");
+        customer.setName("rai");
+        customer.setGender("Masculino");
+        customer.setCpf("165.880.554-20");
+        customer.setBirthday(LocalDate.of(2000,12,10));
+        customer.setUrl_photo("urldafoto");
+        customer.setPoints(0);
+        return customer;
     }
 
 
