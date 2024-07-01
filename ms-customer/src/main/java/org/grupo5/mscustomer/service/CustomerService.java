@@ -38,8 +38,8 @@ public class CustomerService {
     public Customer updateCustomer(Long id, CustomerUpdateDto customerUpdateDto){
        var customerOld = getCustomerById(id);
        BeanUtils.copyProperties(customerUpdateDto,customerOld);
-        customerRepository.save(customerOld);
-        return customerOld;
+       var newCustomer = customerRepository.save(customerOld);
+        return newCustomer;
     }
 
 

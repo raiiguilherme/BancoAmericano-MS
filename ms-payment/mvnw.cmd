@@ -50,7 +50,7 @@ if ($env:MVNW_VERBOSE -eq "true") {
   $VerbosePreference = "Continue"
 }
 
-# rule distributionUrl, requires .mvn/wrapper/maven-wrapper.properties
+# calculate distributionUrl, requires .mvn/wrapper/maven-wrapper.properties
 $distributionUrl = (Get-Content -Raw "$scriptDir/.mvn/wrapper/maven-wrapper.properties" | ConvertFrom-StringData).distributionUrl
 if (!$distributionUrl) {
   Write-Error "cannot read distributionUrl property in $scriptDir/.mvn/wrapper/maven-wrapper.properties"
@@ -70,7 +70,7 @@ switch -wildcard -casesensitive ( $($distributionUrl -replace '^.*/','') ) {
   }
 }
 
-# apply MVNW_REPOURL and rule MAVEN_HOME
+# apply MVNW_REPOURL and calculate MAVEN_HOME
 # maven home pattern: ~/.m2/wrapper/dists/{apache-maven-<version>,maven-mvnd-<version>-<platform>}/<hash>
 if ($env:MVNW_REPOURL) {
   $MVNW_REPO_PATTERN = if ($USE_MVND) { "/org/apache/maven/" } else { "/maven/mvnd/" }
