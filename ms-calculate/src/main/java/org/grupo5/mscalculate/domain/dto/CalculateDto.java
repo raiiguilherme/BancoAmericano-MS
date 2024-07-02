@@ -14,7 +14,9 @@ import lombok.Setter;
 public class CalculateDto {
 
     @NotNull
-    private Long category_id;
+    private Long categoryId;
     @NotNull
-    private Integer value;
+    private Long customerId;
+    @NotNull
+    private Integer total;
 }

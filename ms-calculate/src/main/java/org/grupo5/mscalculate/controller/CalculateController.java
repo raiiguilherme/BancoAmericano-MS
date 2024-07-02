@@ -58,18 +58,18 @@ public class CalculateController {
 
     }
 
-    @PostMapping("/calculate")
-    public ResponseEntity<CalculateResponseDto> calculateTotalOfPoints(@RequestBody @Valid CalculateDto calculateDto){
-            var response = calculateService.calculateValue(calculateDto);
-            return ResponseEntity.ok(response);
+
+    @PostMapping("/calculate")//ENDPOINT DE TESTE
+    public ResponseEntity<CalculateResponseDto> testeOfPublishMessage(@RequestBody @Valid CalculateDto calculateDto){
+           var calcule = calculateService.calculateValue(calculateDto);
 
 
-    }
+            CustomerMessageDto customerMessageDto = new CustomerMessageDto();
+            customerMessageDto.setCustomerId(calculateDto.getCustomerId());
+            customerMessageDto.setPoints(calcule.getTotal());
 
-    @PostMapping("/teste")//ENDPOINT DE TESTE
-    public ResponseEntity<String> testeOfPublishMessage(@RequestBody @Valid CustomerMessageDto customerMessageDto){
             calculateProducer.pushMessageForCustomer(customerMessageDto);
-           return ResponseEntity.ok("Message send with success");
+           return ResponseEntity.ok(calcule);
     }
 
     @GetMapping("/rules/{id}")

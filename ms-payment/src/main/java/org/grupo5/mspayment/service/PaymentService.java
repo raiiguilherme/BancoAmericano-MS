@@ -2,6 +2,7 @@ package org.grupo5.mspayment.service;
 
 import lombok.RequiredArgsConstructor;
 import org.grupo5.mspayment.domain.Payment;
+import org.grupo5.mspayment.domain.dtos.CalculatePostDto;
 import org.grupo5.mspayment.domain.dtos.PaymentCreateDto;
 import org.grupo5.mspayment.domain.dtos.PaymentResponseDto;
 import org.grupo5.mspayment.feingclient.CalculateComunication;
@@ -30,6 +31,16 @@ public PaymentResponseDto createPayment(PaymentCreateDto paymentCreateDto){
     payment.setCustomer_Id(customer.getId());
     payment.setCreated_date(LocalDateTime.now());
     paymentRepository.save(payment);
+
+    //Construindo a requisição post para o mscalculate
+    CalculatePostDto calculatePostDto = new CalculatePostDto();
+    calculatePostDto.setCategoryId(calculate.getId());
+    calculatePostDto.setCustomerId(customer.getId());
+    calculatePostDto.setTotal(paymentCreateDto.getTotal());
+    calculateComunication.createdCalcule(calculatePostDto);
+
+
+    //construindo a resposta
     PaymentResponseDto paymentResponseDto = new PaymentResponseDto();
 
     BeanUtils.copyProperties(payment,paymentResponseDto);

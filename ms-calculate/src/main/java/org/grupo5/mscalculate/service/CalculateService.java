@@ -61,9 +61,9 @@ public class CalculateService {
     public CalculateResponseDto calculateValue(CalculateDto calculateDto){
 
         CalculateResponseDto calculateResponseDto = new CalculateResponseDto();
-        var getRule = calculateRepository.findById(calculateDto.getCategory_id()).orElseThrow(()->new RuntimeException("Category not found"));
+        var getRule = calculateRepository.findById(calculateDto.getCategoryId()).orElseThrow(()->new RuntimeException("Category not found"));
 
-        int total = getRule.getParity()*calculateDto.getValue();
+        int total = getRule.getParity()*calculateDto.getTotal();
         calculateResponseDto.setTotal(total);
         return calculateResponseDto;
 
