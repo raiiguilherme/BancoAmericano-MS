@@ -5,6 +5,7 @@ import org.grupo5.mscalculate.domain.Rule;
 import org.grupo5.mscalculate.domain.dto.CalculateDto;
 import org.grupo5.mscalculate.domain.dto.CalculateResponseDto;
 import org.grupo5.mscalculate.domain.dto.RuleCreateDto;
+import org.grupo5.mscalculate.domain.dto.RuleResponseDto;
 import org.grupo5.mscalculate.repository.CalculateRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,13 @@ public class CalculateService {
         BeanUtils.copyProperties(ruleCreateDto, rule);
         calculateRepository.save(rule);
         return rule;
+
+    }
+    public RuleResponseDto findRuleById(Long id){
+        var rule = calculateRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Rule Not found")
+        );
+        return new RuleResponseDto(rule);
 
     }
 

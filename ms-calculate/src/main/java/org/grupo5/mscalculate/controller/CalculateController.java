@@ -66,10 +66,15 @@ public class CalculateController {
 
     }
 
-    @PostMapping("/teste")
+    @PostMapping("/teste")//ENDPOINT DE TESTE
     public ResponseEntity<String> testeOfPublishMessage(@RequestBody @Valid CustomerMessageDto customerMessageDto){
             calculateProducer.pushMessageForCustomer(customerMessageDto);
            return ResponseEntity.ok("Message send with success");
+    }
+
+    @GetMapping("/rules/{id}")
+    public ResponseEntity<RuleResponseDto> getRuleById(@PathVariable Long id){
+        return ResponseEntity.ok(calculateService.findRuleById(id));
     }
 
 
