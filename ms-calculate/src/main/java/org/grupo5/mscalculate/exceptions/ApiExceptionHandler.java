@@ -1,8 +1,8 @@
-package org.grupo5.mscustomer.exceptions;
+package org.grupo5.mscalculate.exceptions;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.grupo5.mscustomer.exceptions.ex.CustomerNotFoundException;
+import org.grupo5.mscalculate.exceptions.ex.RuleNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,31 +26,33 @@ public class ApiExceptionHandler {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new MessageError(request, HttpStatus.UNPROCESSABLE_ENTITY, "Invalid fields", result));
     }
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<MessageError> categoryAlreadyExist(DataIntegrityViolationException ex, HttpServletRequest request) {
+        log.error("Api Error - ", ex);
+        return ResponseEntity
+                .status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new MessageError(request, HttpStatus.UNPROCESSABLE_ENTITY, "Category already exist"));
+    }
 
-    @ExceptionHandler(CustomerNotFoundException.class)
-    public ResponseEntity<MessageError> customerNotFound(CustomerNotFoundException ex, HttpServletRequest request) {
+
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<MessageError> camposInvalidos(HttpMessageNotReadableException ex, HttpServletRequest request) {
+        log.error("Api Error - ", ex);
+        return ResponseEntity
+                .status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new MessageError(request, HttpStatus.UNPROCESSABLE_ENTITY, "Invalid field"));
+    }
+
+    @ExceptionHandler(RuleNotFoundException.class)
+    public ResponseEntity<MessageError> ruleNotFound(RuleNotFoundException ex, HttpServletRequest request) {
         log.error("Api Error - ", ex);
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new MessageError(request, HttpStatus.NOT_FOUND, ex.getMessage()));
-    }
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<MessageError> cpfOrEmailAlreadyExist(DataIntegrityViolationException ex, HttpServletRequest request) {
-        log.error("Api Error - ", ex);
-        return ResponseEntity
-                .status(HttpStatus.UNPROCESSABLE_ENTITY)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(new MessageError(request, HttpStatus.UNPROCESSABLE_ENTITY, "CPF or Email already exist"));
-    }
-
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<MessageError> incorrectValue(HttpMessageNotReadableException ex, HttpServletRequest request) {
-        log.error("Api Error - ", ex);
-        return ResponseEntity
-                .status(HttpStatus.UNPROCESSABLE_ENTITY)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(new MessageError(request, HttpStatus.UNPROCESSABLE_ENTITY, "Date in incorrect format"));
     }
 
 

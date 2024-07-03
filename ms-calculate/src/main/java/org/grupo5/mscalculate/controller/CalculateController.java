@@ -8,6 +8,7 @@ import org.grupo5.mscalculate.producer.CalculateProducer;
 import org.grupo5.mscalculate.service.CalculateService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class CalculateController {
 
     }
 
-
+    @Transactional
     @PostMapping("/calculate")//ENDPOINT DE TESTE
     public ResponseEntity<CalculateResponseDto> testeOfPublishMessage(@RequestBody @Valid CalculateDto calculateDto){
            var calcule = calculateService.calculateValue(calculateDto);

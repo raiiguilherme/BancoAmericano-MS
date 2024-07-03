@@ -6,10 +6,9 @@ import org.grupo5.mspayment.domain.dtos.PaymentCreateDto;
 import org.grupo5.mspayment.domain.dtos.PaymentResponseDto;
 import org.grupo5.mspayment.service.PaymentService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1")
@@ -22,4 +21,21 @@ private final PaymentService paymentService;
         return ResponseEntity.ok(paymentService.createPayment(paymentCreateDto));
 
     }
+
+    @GetMapping("/payments/{id}")
+    public ResponseEntity<PaymentResponseDto> getPaymentById(@PathVariable UUID id){
+        return ResponseEntity.ok(paymentService.getPaymentById(id));
+
+    }
+
+    @GetMapping("/payments/user/{id}")
+    public ResponseEntity<PaymentResponseDto> getPaymentByCustomerId(@PathVariable Long id){
+        return ResponseEntity.ok(paymentService.getPaymentByCustomerId(id));
+
+    }
+
+
+
+
+
 }

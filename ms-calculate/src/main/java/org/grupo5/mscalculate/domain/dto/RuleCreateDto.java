@@ -12,8 +12,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RuleCreateDto {
-    @NotBlank
+    @NotBlank(message = "Category not be blank")
     private String category;
-    @NotNull
+    @NotNull(message = "Parity not be blank")
     private Integer parity;
 }

@@ -6,6 +6,7 @@ import org.grupo5.mscalculate.domain.dto.CalculateDto;
 import org.grupo5.mscalculate.domain.dto.CalculateResponseDto;
 import org.grupo5.mscalculate.domain.dto.RuleCreateDto;
 import org.grupo5.mscalculate.domain.dto.RuleResponseDto;
+import org.grupo5.mscalculate.exceptions.ex.RuleNotFoundException;
 import org.grupo5.mscalculate.repository.CalculateRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,18 @@ public class CalculateService {
 
     }
     public RuleResponseDto findRuleById(Long id){
-        var rule = calculateRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Rule Not found")
-        );
-        return new RuleResponseDto(rule);
+
+       if (calculateRepository.findById(id).isEmpty()){ //WHEN CATEGORY NOT EXISTS
+           RuleResponseDto ruleResponseDto = new RuleResponseDto();
+           ruleResponseDto.setId(id);
+           ruleResponseDto.setCategory("without category");
+           ruleResponseDto.setParity(1);
+           return ruleResponseDto;
+       }
+       else { //WHEN CATEGORY EXISTS
+           var rule = calculateRepository.findById(id).get();
+           return new RuleResponseDto(rule);
+       }
 
     }
 
@@ -41,7 +50,7 @@ public class CalculateService {
 
     public void deleteRuleById(Long id){
      var calculateRule = calculateRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("User not found")
+                () -> new RuleNotFoundException("Rule not found")
         );
 
      calculateRepository.delete(calculateRule);
@@ -49,23 +58,32 @@ public class CalculateService {
     }
 
     public Rule updateCalculateById(RuleCreateDto ruleCreateDto, Long id){
-        var calculateOld = calculateRepository.findById(id).orElseThrow(()->new RuntimeException("Calculate not found"));
+        var calculateOld = calculateRepository.findById(id).orElseThrow(()->new RuleNotFoundException("Rule not found"));
         BeanUtils.copyProperties(ruleCreateDto,calculateOld);
-        var newCustomer = calculateRepository.save(calculateOld);
-        return newCustomer;
+        return calculateRepository.save(calculateOld);
 
     }
 
-    //TODO Fazer o metodo POST que ira calcular o total de pontos
+
+
+
 
     public CalculateResponseDto calculateValue(CalculateDto calculateDto){
 
         CalculateResponseDto calculateResponseDto = new CalculateResponseDto();
-        var getRule = calculateRepository.findById(calculateDto.getCategoryId()).orElseThrow(()->new RuntimeException("Category not found"));
 
-        int total = getRule.getParity()*calculateDto.getTotal();
-        calculateResponseDto.setTotal(total);
-        return calculateResponseDto;
+        if (calculateRepository.findById(calculateDto.getCategoryId()).isEmpty()){ //WHEN CATEGORY NOT EXISTS
+            int total = calculateDto.getTotal();
+            calculateResponseDto.setTotal(total);
+            return calculateResponseDto;
+        }
+        else {//WHEN CATEGORY EXISTS
+            var getRule = calculateRepository.findById(calculateDto.getCategoryId()).get();
+
+            int total = getRule.getParity() * calculateDto.getTotal();
+            calculateResponseDto.setTotal(total);
+            return calculateResponseDto;
+        }
 
     }
 

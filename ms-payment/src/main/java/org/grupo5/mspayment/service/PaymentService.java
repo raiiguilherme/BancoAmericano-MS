@@ -5,6 +5,8 @@ import org.grupo5.mspayment.domain.Payment;
 import org.grupo5.mspayment.domain.dtos.CalculatePostDto;
 import org.grupo5.mspayment.domain.dtos.PaymentCreateDto;
 import org.grupo5.mspayment.domain.dtos.PaymentResponseDto;
+import org.grupo5.mspayment.exceptions.ex.CustomerNotFoundException;
+import org.grupo5.mspayment.exceptions.ex.PaymentNotFoundException;
 import org.grupo5.mspayment.feingclient.CalculateComunication;
 import org.grupo5.mspayment.feingclient.CustomerComunication;
 import org.grupo5.mspayment.repository.PaymentRepository;
@@ -12,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -50,4 +53,37 @@ public PaymentResponseDto createPayment(PaymentCreateDto paymentCreateDto){
 
 
 }
+
+
+public PaymentResponseDto getPaymentById(UUID id){
+    var payment = paymentRepository.findById(id).orElseThrow(
+            () -> new PaymentNotFoundException("Payment Not found")
+    );
+    PaymentResponseDto paymentResponseDto = new PaymentResponseDto();
+
+    BeanUtils.copyProperties(payment, paymentResponseDto);
+    return paymentResponseDto;
+
+}
+
+    public PaymentResponseDto getPaymentByCustomerId(Long id) {
+        try {
+            var payment = paymentRepository.find(id);
+            PaymentResponseDto paymentResponseDto = new PaymentResponseDto();
+            BeanUtils.copyProperties(payment, paymentResponseDto);
+            return paymentResponseDto;
+    }
+        catch (IllegalArgumentException e){
+            throw new CustomerNotFoundException("Customer not found");
+        }
+
+    }
+
+
+
+
+
+
+
+
 }
