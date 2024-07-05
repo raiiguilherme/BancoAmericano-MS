@@ -18,27 +18,33 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
 
     public Customer createCustomer(CustomerCreateDto customerCreateDto){
+
         var customer = costumerDtoForCostumer(customerCreateDto);
+
         customerRepository.save(customer);
+
         return customer;
     }
 
     public Customer getCustomerById(Long id){
         return customerRepository.findById(id).orElseThrow(
-               () -> new CustomerNotFoundException("Usuario nao encontrado")
+               () -> new CustomerNotFoundException("User not found")
        );
     }
 
     public void deleteCustomerById(Long id){
-        var customer = getCustomerById(id);
+        var customer = customerRepository.findById(id).orElseThrow(
+                () -> new CustomerNotFoundException("User not found")
+        );
         customerRepository.delete(customer);
     }
 
     public Customer updateCustomer(Long id, CustomerUpdateDto customerUpdateDto){
-       var customerOld = getCustomerById(id);
+       var customerOld = customerRepository.findById(id).orElseThrow(
+               () -> new CustomerNotFoundException("Customer not found")
+       );
        BeanUtils.copyProperties(customerUpdateDto,customerOld);
-       var newCustomer = customerRepository.save(customerOld);
-        return newCustomer;
+        return customerRepository.save(customerOld);
     }
 
 

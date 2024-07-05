@@ -50,6 +50,7 @@ private final CustomerService customerService;
     public ResponseEntity<CustomerResponseDto> updateCustomerById(@PathVariable Long id,@Valid @RequestBody CustomerUpdateDto customerUpdateDto){
 
     var customer = customerService.updateCustomer(id,customerUpdateDto);
+
     CustomerResponseDto customerResponseDto = new CustomerResponseDto();
     BeanUtils.copyProperties(customer, customerResponseDto);
     return ResponseEntity.ok(customerResponseDto);
