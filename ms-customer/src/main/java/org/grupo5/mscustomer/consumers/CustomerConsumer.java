@@ -23,7 +23,6 @@ public void consumesMessageAndSaveAllPoints(@Payload CalculateDto calculateDto){
       Integer customerAllPoints = customer.getPoints()+ calculateDto.getPoints();
       customer.setPoints(customerAllPoints);
       customerRepository.save(customer);
-      System.out.println("chegou aqui");
 
 
 
