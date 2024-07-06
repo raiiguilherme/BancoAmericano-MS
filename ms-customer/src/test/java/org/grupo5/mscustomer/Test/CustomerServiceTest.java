@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+import com.amazonaws.services.s3.AmazonS3;
+import org.grupo5.mscustomer.AWS.S3Config;
 import org.grupo5.mscustomer.domain.Customer;
 import org.grupo5.mscustomer.domain.dtos.CustomerCreateDto;
 import org.grupo5.mscustomer.domain.dtos.CustomerUpdateDto;
@@ -16,10 +18,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.annotation.DirtiesContext;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -27,6 +37,8 @@ public class CustomerServiceTest {
 
     @Mock
     private CustomerRepository customerRepository;
+    @Mock
+    private AmazonS3 amazonS3;
 
     @InjectMocks
     private CustomerService customerService;
@@ -46,7 +58,7 @@ public class CustomerServiceTest {
         customerCreateDto.setGender("Masculino");
         customerCreateDto.setCpf("165.880.554-20");
         customerCreateDto.setBirthday(LocalDate.of(2000, 12, 10));
-        customerCreateDto.setUrl_photo("urldafoto");
+        customerCreateDto.setPhotoBase64(Base64.getEncoder().encodeToString("testImage".getBytes()));
 
         customerCreateDtoError = new CustomerCreateDto();
         customerCreateDtoError.setEmail("rai");
@@ -54,7 +66,7 @@ public class CustomerServiceTest {
         customerCreateDtoError.setGender("Mo");
         customerCreateDtoError.setCpf("14-20");
         customerCreateDtoError.setBirthday(LocalDate.of(2000, 12, 10));
-        customerCreateDtoError.setUrl_photo("to");
+        customerCreateDtoError.setPhotoBase64("photobase64");
 
         customer = new Customer();
         customer.setId(1L);
@@ -63,7 +75,7 @@ public class CustomerServiceTest {
         customer.setGender("Masculino");
         customer.setCpf("165.880.554-20");
         customer.setBirthday(LocalDate.of(2000, 12, 10));
-        customer.setUrl_photo("urldafoto");
+        customer.setUrl_photo("http://s3.url/" + UUID.randomUUID() + ".PNG");
         customer.setPoints(0);
 
         customerUpdateDto = new CustomerUpdateDto();
@@ -76,8 +88,14 @@ public class CustomerServiceTest {
     }
 
     @Test
-    void saveCustomerWithDataValid() {
+    void saveCustomerWithDataValid() throws MalformedURLException {
+
+
+
+        when(amazonS3.putObject(anyString(), anyString(), any(File.class))).thenReturn(null);
+        when(amazonS3.getUrl(anyString(), anyString())).thenReturn(new URL(customer.getUrl_photo()));
         when(customerRepository.save(any(Customer.class))).thenReturn(customer);
+
 
         var savedCustomer = customerService.createCustomer(customerCreateDto);
         savedCustomer.setId(1L);

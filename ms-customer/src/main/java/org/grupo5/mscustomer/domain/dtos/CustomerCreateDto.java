@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.time.LocalDate;
@@ -34,7 +35,8 @@ public class CustomerCreateDto {
     @NotBlank
     @Email(message = "Email in invalid format", regexp = "^[a-z0-9.+-]+@[a-z0-9.-]+\\.[a-z]{2,}$")
     private String email;
+
     @NotBlank(message = "Must not be null or blank")
-    private  String url_photo;
+    private String photoBase64;
 
 }

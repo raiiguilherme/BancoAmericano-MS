@@ -21,6 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.util.Base64;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -55,12 +56,12 @@ public class CustomerControllerTest {
 
 
         customerCreateDto = new CustomerCreateDto();
+        customerCreateDto.setPhotoBase64("photoin64base");
         customerCreateDto.setEmail("rai@gmail.com");
         customerCreateDto.setName("rai");
         customerCreateDto.setGender("Masculino");
         customerCreateDto.setCpf("165.880.554-20");
         customerCreateDto.setBirthday(LocalDate.of(2000, 12, 10));
-        customerCreateDto.setUrl_photo("urldafoto");
 
         customerCreateDtoError = new CustomerCreateDto();
         customerCreateDtoError.setEmail("rai");
@@ -68,7 +69,7 @@ public class CustomerControllerTest {
         customerCreateDtoError.setGender("Mo");
         customerCreateDtoError.setCpf("14-20");
         customerCreateDtoError.setBirthday(LocalDate.of(2000, 12, 10));
-        customerCreateDtoError.setUrl_photo("to");
+        customerCreateDtoError.setPhotoBase64("to");
 
         customerUpdateDtoError = new CustomerUpdateDto();
         customerCreateDtoError.setEmail("rai");
@@ -76,7 +77,7 @@ public class CustomerControllerTest {
         customerCreateDtoError.setGender("Mo");
         customerCreateDtoError.setCpf("14-20");
         customerCreateDtoError.setBirthday(LocalDate.of(2000, 12, 10));
-        customerCreateDtoError.setUrl_photo("to");
+        customerCreateDtoError.setPhotoBase64("to");
 
         customer = new Customer();
         customer.setId(1L);
@@ -85,7 +86,7 @@ public class CustomerControllerTest {
         customer.setGender("Masculino");
         customer.setCpf("165.880.554-20");
         customer.setBirthday(LocalDate.of(2000, 12, 10));
-        customer.setUrl_photo("urldafoto");
+        customer.setUrl_photo("aws.exampleur.s3.mybucket.com.br");
         customer.setPoints(0);
 
         customerUpdateDto = new CustomerUpdateDto();
@@ -106,7 +107,7 @@ public class CustomerControllerTest {
 
         mockMvc.perform(post("/v1/customers")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(customer)))
+                        .content(objectMapper.writeValueAsString(customerCreateDto)))
                 .andExpect(status().isCreated());
 
     }

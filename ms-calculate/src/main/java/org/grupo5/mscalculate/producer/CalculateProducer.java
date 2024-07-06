@@ -18,11 +18,8 @@ public class CalculateProducer {
 
     public void pushMessageForCustomer(CustomerMessageDto customerMessageDto){
 
-
-
-        //COMO SERA UTILIZADO EXCHANGE DEFAULT, BASTA ADICIONAR UMA STRING VAZIA
-        //ADICIONANDO TAMBEM A ROUTINGKEY
-        //ADICIONANDO TAMBEM A MENSAGEM
+        //THIS ROUTING KEY IS QUEUE NAME IN MS-CUSTOMER
+        //EXCHANGE DEFAULT
         rabbitTemplate.convertAndSend("",routingkey,customerMessageDto);
 
     }

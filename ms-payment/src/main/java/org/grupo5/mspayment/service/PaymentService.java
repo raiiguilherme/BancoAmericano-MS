@@ -27,7 +27,7 @@ public class PaymentService {
 public PaymentResponseDto createPayment(PaymentCreateDto paymentCreateDto){
     var calculate = calculateComunication.getCalculate(paymentCreateDto.getCategoryId());
     var customer = customerComunication.getCustomer(paymentCreateDto.getCustomerId());
-    if (customer==null) throw new RuntimeException("Customer NotFound");
+    if (customer==null) throw new CustomerNotFoundException("Customer NotFound");
     Payment payment = new Payment();
     payment.setCategory(calculate.getCategory());
     payment.setTotal(paymentCreateDto.getTotal());
@@ -68,7 +68,7 @@ public PaymentResponseDto getPaymentById(UUID id){
 
     public PaymentResponseDto getPaymentByCustomerId(Long id) {
         try {
-            var payment = paymentRepository.find(id);
+            var payment = paymentRepository.findPaymentbyCustomerId(id);
             PaymentResponseDto paymentResponseDto = new PaymentResponseDto();
             BeanUtils.copyProperties(payment, paymentResponseDto);
             return paymentResponseDto;

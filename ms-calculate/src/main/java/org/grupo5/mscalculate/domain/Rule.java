@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "calculate")
+@Table(name = "rule_bd")
 @Getter
 @Setter
 @AllArgsConstructor

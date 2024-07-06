@@ -35,6 +35,7 @@ public class Customer {
 
     @Column(nullable = false)
     private Integer points;
+
     @Column(nullable = false)
     private  String url_photo;
 

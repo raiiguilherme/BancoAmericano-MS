@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface PaymentRepository extends JpaRepository<Payment, UUID> {
 
     @Query("SELECT u FROM Payment u WHERE u.customer_Id = :id")
-    Payment find(Long id);
+    Payment findPaymentbyCustomerId(Long id);
 
 
 }
