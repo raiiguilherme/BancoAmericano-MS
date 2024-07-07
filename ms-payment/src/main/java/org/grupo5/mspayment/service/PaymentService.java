@@ -35,7 +35,7 @@ public PaymentResponseDto createPayment(PaymentCreateDto paymentCreateDto){
     payment.setCreated_date(LocalDateTime.now());
     paymentRepository.save(payment);
 
-    //Construindo a requisição post para o mscalculate
+    //make the post request for calculatems
     CalculatePostDto calculatePostDto = new CalculatePostDto();
     calculatePostDto.setCategoryId(calculate.getId());
     calculatePostDto.setCustomerId(customer.getId());
@@ -43,7 +43,7 @@ public PaymentResponseDto createPayment(PaymentCreateDto paymentCreateDto){
     calculateComunication.createdCalcule(calculatePostDto);
 
 
-    //construindo a resposta
+    //make to response
     PaymentResponseDto paymentResponseDto = new PaymentResponseDto();
 
     BeanUtils.copyProperties(payment,paymentResponseDto);

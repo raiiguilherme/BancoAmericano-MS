@@ -2,6 +2,7 @@ package org.grupo5.mspayment.test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.grupo5.mspayment.controller.PaymentController;
 import org.grupo5.mspayment.domain.Payment;
 import org.grupo5.mspayment.domain.dtos.CalculateComunicationDto;
@@ -41,10 +42,10 @@ public class PaymentControllerTest {
 
     @MockBean
     private PaymentService paymentService;
+    @Autowired  //por algum motivo, quando utilizo o @RequiredArgsConstructor nao funciona, por isso o uso do @Autowired
+    private  MockMvc mockMvc;
     @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
+    private  ObjectMapper objectMapper;
 
     private Payment payment;
     private PaymentCreateDto paymentCreateDto;
