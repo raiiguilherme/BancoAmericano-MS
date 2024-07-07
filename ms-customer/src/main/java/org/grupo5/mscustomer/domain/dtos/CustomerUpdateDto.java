@@ -32,6 +32,5 @@ public class CustomerUpdateDto {
     @NotBlank
     @Email(message = "Email in invalid format", regexp = "^[a-z0-9.+-]+@[a-z0-9.-]+\\.[a-z]{2,}$")
     private String email;
-    @NotBlank
-    private  String url_photo;
+    
 }

@@ -73,7 +73,12 @@ public class CustomerService {
        var customerOld = customerRepository.findById(id).orElseThrow(
                () -> new CustomerNotFoundException("Customer not found")
        );
-       BeanUtils.copyProperties(customerUpdateDto,customerOld);
+        customerOld.setCpf(customerUpdateDto.getCpf());
+        customerOld.setGender(customerUpdateDto.getGender());
+        customerOld.setName(customerUpdateDto.getName());
+        customerOld.setEmail(customerUpdateDto.getEmail());
+        customerOld.setBirthday(customerUpdateDto.getBirthday());
+
         return customerRepository.save(customerOld);
     }
 

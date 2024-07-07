@@ -95,7 +95,6 @@ public class CustomerControllerTest {
         customerUpdateDto.setGender("Masculino");
         customerUpdateDto.setCpf("165.880.554-21");
         customerUpdateDto.setBirthday(LocalDate.of(2000, 12, 10));
-        customerUpdateDto.setUrl_photo("urldafoto");
 
 
 
