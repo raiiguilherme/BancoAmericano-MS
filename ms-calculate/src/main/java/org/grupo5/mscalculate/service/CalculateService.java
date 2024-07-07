@@ -6,6 +6,7 @@ import org.grupo5.mscalculate.domain.dto.CalculateDto;
 import org.grupo5.mscalculate.domain.dto.CalculateResponseDto;
 import org.grupo5.mscalculate.domain.dto.RuleCreateDto;
 import org.grupo5.mscalculate.domain.dto.RuleResponseDto;
+import org.grupo5.mscalculate.exceptions.ex.RuleEqualsZeroException;
 import org.grupo5.mscalculate.exceptions.ex.RuleNotFoundException;
 import org.grupo5.mscalculate.repository.CalculateRepository;
 import org.springframework.beans.BeanUtils;
@@ -21,6 +22,7 @@ public class CalculateService {
 
 
     public Rule createRule(RuleCreateDto ruleCreateDto){
+        if (ruleCreateDto.getParity() == 0) throw new RuleEqualsZeroException("rule parity not be equals 0");
         Rule rule = new Rule();
         BeanUtils.copyProperties(ruleCreateDto, rule);
         calculateRepository.save(rule);

@@ -2,6 +2,7 @@ package org.grupo5.mscalculate.exceptions;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.grupo5.mscalculate.exceptions.ex.RuleEqualsZeroException;
 import org.grupo5.mscalculate.exceptions.ex.RuleNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -53,6 +54,15 @@ public class ApiExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new MessageError(request, HttpStatus.NOT_FOUND, ex.getMessage()));
+    }
+
+    @ExceptionHandler(RuleEqualsZeroException.class)
+    public ResponseEntity<MessageError> ruleEqualsZero(RuleEqualsZeroException ex, HttpServletRequest request) {
+        log.error("Api Error - ", ex);
+        return ResponseEntity
+                .status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new MessageError(request, HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage()));
     }
 
 

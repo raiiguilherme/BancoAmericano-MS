@@ -32,6 +32,10 @@ public class CalculateController {
             @ApiResponse(responseCode = "200", description = "created with success.",
                     content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "422", description = "fields not valid",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = MessageError.class))),
+            @ApiResponse(responseCode = "422", description = "Category already exist",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = MessageError.class))),
+            @ApiResponse(responseCode = "422", description = "parity not be equals 0",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = MessageError.class)))
     })
     @PostMapping("/rules")
