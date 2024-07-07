@@ -13,6 +13,8 @@ e entao mandar uma mensagem para o MsCustomer, que ira salvar os pontos adquirid
 - **Recebimento de Mensagens:** Via RabbitMq, recebe mensagens postadas pelo MsCalculate
 - **Edição do Cadastro de Clientes:** Resgatar cliente por id, deletar e atualizar.
 - **Documentação da API:** Utilizando Swagger.
+- **URL da Api:** http://localhost:8081/v1/
+  
 
 ### Jacoco
 ![Jacoco MsCustomer](https://minhabucketparaojava.s3.amazonaws.com/imagens-de-perfil/jacocoMSCUSTOMER.PNG)
@@ -25,6 +27,7 @@ e entao mandar uma mensagem para o MsCustomer, que ira salvar os pontos adquirid
 - **Edição de Rules:** Resgatar todas as Rules, deletar e atualizar.
 - **Mensagem para o MsCustomer:** atraves do endpoint /calculate, é possivel calcular os pontos e enviar para serem salvos pelo MsCustomer
 - **Documentação da API:** Utilizando Swagger.
+- **URL da Api:** http://localhost:8082/v1/
 
 ### Jacoco
 ![Jacoco MsCalculate](https://minhabucketparaojava.s3.amazonaws.com/imagens-de-perfil/jacocoMsCalculate.PNG)
@@ -37,6 +40,7 @@ e entao mandar uma mensagem para o MsCustomer, que ira salvar os pontos adquirid
 - **Gerenciamento de Pagamentos:** Resgatar pagamento por id UUID e resgatar pagamento por id do Customer.
 - **Automatização:** ao realizar um pagamento, o mspayment realiza um post para o mscalculate que automaticamente ja calcula os pontos e ja manda uma mensagem via rabbitmq para o mscustomer que ja salva a quantidade de pontos.
 - **Documentação da API:** Utilizando Swagger.
+- **URL da Api:** http://localhost:8083/v1/
 
 ### Jacoco
 ![Jacoco MsPayment](https://minhabucketparaojava.s3.amazonaws.com/imagens-de-perfil/jacocoMsPayment.PNG)
