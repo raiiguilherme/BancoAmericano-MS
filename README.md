@@ -1,4 +1,4 @@
-# PB Springboot - Desafio 3: Projeto Banco Americano
+# Springboot - Desafio 3: Projeto Banco Americano
 
 ## Descrição
 
